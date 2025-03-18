@@ -7,7 +7,10 @@ import lombok.Data;
 @Data
 @ApiModel("物料分类DTO")
 public class HtMatterDTO {
-    
+
+    @ApiModelProperty("关键字")
+    private String keyword;
+
     @ApiModelProperty("物料编码")
     private String matterCode;
     

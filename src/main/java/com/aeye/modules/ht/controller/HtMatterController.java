@@ -14,6 +14,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +29,6 @@ public class HtMatterController extends AeyeAbstractController {
     @Autowired
     private IHtMatterService htMatterService;
 
-
     @ApiImplicitParams({
             @ApiImplicitParam(name="pageNum", value = "当前页码", dataType="int", paramType = "header"),
             @ApiImplicitParam(name="pageSize",value="每页条目",dataType="int", paramType = "header"),
@@ -38,11 +38,16 @@ public class HtMatterController extends AeyeAbstractController {
     @RequestMapping(value = "/list",method = {RequestMethod.POST,RequestMethod.GET})
     @ApiOperation(value = "查询列表")
     public WrapperResponse<List<HtMatterDTO>> list(HtMatterDTO params) throws Exception{
+
         IPage<HtMatterDO> page = htMatterService.page(
                 new Query<HtMatterDO>().getPage(buildPageInfo()),
                 new LambdaQueryWrapper<HtMatterDO>()
-                    .eq(HtMatterDO::getParentCode,params.getParentCode())
-                    .orderByAsc(HtMatterDO::getMatterCode)
+                        .eq(StringUtils.isNotBlank(params.getParentCode()), HtMatterDO::getParentCode, params.getParentCode())
+                        .and(StringUtils.isNotBlank(params.getKeyword()),
+                                wrapper -> wrapper.like(HtMatterDO::getMatterCode, params.getKeyword())
+                                        .or()
+                                        .like(HtMatterDO::getMatterName, params.getKeyword()))
+                        .orderByAsc(HtMatterDO::getOrderNum)
         );
         return (WrapperResponse)WrapperResponse.success(page);
     }
