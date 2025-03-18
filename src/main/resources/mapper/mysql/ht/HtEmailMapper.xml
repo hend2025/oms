@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aeye.modules.ht.dao.HtEmailDAO">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.aeye.modules.ht.entity.HtEmailDO" id="htEmailMap">
+        <result property="emailId" column="EMAIL_ID"/>
+        <result property="emailUrl" column="EMAIL_URL"/>
+        <result property="emailName" column="EMAIL_NAME"/>
+        <result property="orderNum" column="ORDER_NUM"/>
+        <result property="remarks" column="REMARKS"/>
+        <result property="crteTime" column="CRTE_TIME"/>
+        <result property="updtTime" column="UPDT_TIME"/>
+    </resultMap>
+
+</mapper>

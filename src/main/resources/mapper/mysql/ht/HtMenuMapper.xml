@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aeye.modules.ht.dao.HtMenuDAO">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.aeye.modules.ht.entity.HtMenuDO" id="htMenuMap">
+        <result property="menuId" column="MENU_ID"/>
+        <result property="verId" column="VER_ID"/>
+        <result property="projectId" column="PROJECT_ID"/>
+        <result property="moduleNo" column="MODULE_NO"/>
+        <result property="menuName" column="MENU_NAME"/>
+        <result property="parentName" column="PARENT_NAME"/>
+        <result property="menuUrl" column="MENU_URL"/>
+        <result property="menuKey" column="MENU_KEY"/>
+        <result property="menuType" column="MENU_TYPE"/>
+        <result property="menuIcon" column="MENU_ICON"/>
+        <result property="orderNum" column="ORDER_NUM"/>
+        <result property="remarks" column="REMARKS"/>
+        <result property="crteTime" column="CRTE_TIME"/>
+        <result property="updtTime" column="UPDT_TIME"/>
+    </resultMap>
+
+</mapper>

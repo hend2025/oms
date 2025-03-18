@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aeye.modules.ht.dao.HtJobsDAO">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.aeye.modules.ht.entity.HtJobsDO" id="htJobsMap">
+        <result property="jobId" column="JOB_ID"/>
+        <result property="verId" column="VER_ID"/>
+        <result property="projectId" column="PROJECT_ID"/>
+        <result property="serviceNo" column="SERVICE_NO"/>
+        <result property="jobName" column="JOB_NAME"/>
+        <result property="jobDesc" column="JOB_DESC"/>
+        <result property="jobCron" column="JOB_CRON"/>
+        <result property="executorParam" column="EXECUTOR_PARAM"/>
+        <result property="author" column="AUTHOR"/>
+        <result property="remarks" column="REMARKS"/>
+        <result property="crteTime" column="CRTE_TIME"/>
+        <result property="updtTime" column="UPDT_TIME"/>
+    </resultMap>
+
+</mapper>

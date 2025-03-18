@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aeye.modules.ht.dao.HtConfigDAO">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.aeye.modules.ht.entity.HtConfigDO" id="htConfigMap">
+        <result property="configId" column="CONFIG_ID"/>
+        <result property="verId" column="VER_ID"/>
+        <result property="projectId" column="PROJECT_ID"/>
+        <result property="serviceNo" column="SERVICE_NO"/>
+        <result property="yamlText" column="YAML_TEXT"/>
+        <result property="propText" column="PROP_TEXT"/>
+        <result property="operName" column="OPER_NAME"/>
+        <result property="remarks" column="REMARKS"/>
+        <result property="crteTime" column="CRTE_TIME"/>
+        <result property="updtTime" column="UPDT_TIME"/>
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aeye.modules.ht.dao.HtVerContDAO">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.aeye.modules.ht.entity.HtVerContDO" id="htVerContMap">
+        <result property="verContId" column="VER_CONT_ID"/>
+        <result property="verId" column="VER_ID"/>
+        <result property="projectId" column="PROJECT_ID"/>
+        <result property="moduleNo" column="MODULE_NO"/>
+        <result property="changeText" column="CHANGE_TEXT"/>
+        <result property="remarks" column="REMARKS"/>
+        <result property="crteTime" column="CRTE_TIME"/>
+        <result property="updtTime" column="UPDT_TIME"/>
+    </resultMap>
+
+</mapper>

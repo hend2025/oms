@@ -1,0 +1,116 @@
+#系统模式：api=前后端分离；normal=正常前后端集成
+htModel: normal
+#医保平台在统一门户里面的系统id
+htId: 23
+
+server:
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 1000
+    min-spare-threads: 30
+  port: 8002
+  servlet:
+    context-path:  /version
+    session:
+      timeout: 1800
+      cookie:
+        path: /
+
+spring:
+  application:
+    name: hend-version
+    version: "@gitTag@"
+    buildTime: "@buildTime@" #默认UTC时区代码显示时处理一下+8小时
+  cache:
+    type: redis
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://192.168.16.147:3306/medicare_version?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+      username: root
+      password: 123456
+#      url: jdbc:mysql://8.134.86.171:3306/medicare_version?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+#      username: root
+#      password: He@1234.
+
+  redis:
+    database: 6
+    host: 192.168.10.147
+    password: 123456
+    port: 6379
+    timeout: 6000ms  # 连接超时时长（毫秒）
+
+#HSAF 单点登录sso^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+security:
+  type: hsa-sso
+  #特权模式放开API权限控制（但是仍需要登录权限）
+  isPrivilege: true
+  oauth2:
+    client:
+      #这里源码用的AntPathMatcher匹配，通配符记得跟在/后面，不要挨着字母
+      permits: /druid,/druid/**,/swagger-ui.html,/swagger/**,/doc.html,/webjars/**,/swagger-resources/**,/v2/**,/druid/**,/monitor/**,/web/socket/**,/statics/**,/*.jpg,/cloud/**
+
+#HSAF 单点登录redis
+session:
+  redis:
+    host: 192.168.10.147
+    password: 123456
+    port: 6379
+    database: 5
+    timeout: 6000
+#HSAF 单点登录sso
+
+#HSAF redis缓存技术
+clusterDeploy: false
+#cache顶层目录
+cacheLevel: "HSA:IMS:ZHY:"
+cache:
+  #单机
+  alone:
+    deployType: 1
+    cacheName: defaultCache
+    clusterNodes: 192.168.10.147
+    password: 123456
+  #集群(若是多IP，中间用逗号隔即可)
+  cluster:
+    deployType: 2
+    cacheName: defaultCache
+    clusterNodes: 192.168.10.147
+    password: 123456
+    maxRedirects: 3 #此参数也可以不配置,仅对集群模式有效,采用默认值即可，默认值5
+#HSAF redis缓存技术
+
+areaCode: 430000
+hsaf:
+  trace:
+    defaultBizCode: ipsadmin
+
+#mybatis
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.aeye.modules.*.entity
+  global-config:
+    #数据库相关配置
+    db-config:
+      #主键类型  AUTO:"数据库ID自增", INPUT:"用户输入ID", ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
+      id-type: AUTO
+      #字段策略 IGNORED:"忽略判断",NOT_NULL:"非 NULL 判断"),NOT_EMPTY:"非空判断"
+      field-strategy: NOT_NULL
+      #驼峰下划线转换
+      column-underline: true
+      logic-delete-value: -1
+      logic-not-delete-value: 0
+    banner: false
+  #原生配置
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    call-setters-on-nulls: true
+    jdbc-type-for-null: 'null'
+
+logging:
+  level:
+    root: warn
+  path: /home/medical/logs/hend-client/

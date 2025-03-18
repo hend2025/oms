@@ -1,0 +1,28 @@
+##医保平台在统一门户里面的系统id
+#htId: 3
+#logging:
+#  level:
+#    root: warn
+#  path: /home/medical/logs/hend-admin/
+#
+##此处为开源nacos配置中心环境
+#spring:
+#  profiles:
+#    active: test
+#  application:
+#    name: hend-admin
+#    version: "@gitTag@"
+#    buildTime: "@buildTime@" #默认UTC时区代码显示时处理一下+8小时
+#  cloud:
+#    nacos:
+#      config:
+#        file-extension: yaml
+#        server-addr: ${nacos_host}
+#        group: hsa-ims-his #默认分组，参考nacos的数据隔离方式
+#        #开发环境配置命名空间
+#        namespace: ${nacos_namespace}
+#nacos_host: 192.168.16.148:8848
+#nacos_namespace: hsa-ims-scen-hend
+##nacos版本必须要
+#project:
+#  version: 1.4.1

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aeye.modules.ht.dao.HtAppDAO">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.aeye.modules.ht.entity.HtAppDO" id="htAppMap">
+        <result property="appCode" column="APP_CODE"/>
+        <result property="appName" column="APP_NAME"/>
+        <result property="orderNum" column="ORDER_NUM"/>
+        <result property="remarks" column="REMARKS"/>
+        <result property="crteTime" column="CRTE_TIME"/>
+        <result property="updtTime" column="UPDT_TIME"/>
+    </resultMap>
+
+    <select id="getAppVerInfo" resultType="com.aeye.modules.ht.entity.HtAppDO">
+        select t2.APP_CODE,t2.ORDER_NUM,
+               if(t3.FIRST_VER_NO is null,t2.FIRST_VER_NO,t3.FIRST_VER_NO) as FIRST_VER_NO,
+               if(t3.FIRST_VER_NO is null,t2.SECOND_VER_NO,t3.SECOND_VER_NO) as SECOND_VER_NO,
+               if(t3.FIRST_VER_NO is null,t2.REMARKS,t3.REMARKS) as REMARKS
+        from ht_mapping t1 left join ht_app t2 on t1.APP_CODE = t2.APP_CODE
+                           left join (
+                                select PROJECT_ID,APP_CODE,FIRST_VER_NO,SECOND_VER_NO,REMARKS
+                                from ht_ver_rela
+                                where VER_RELA_ID in (
+                                    select max(a2.VER_RELA_ID) as MAXID
+                                    from ht_ver_info a1,ht_ver_rela a2
+                                    where a1.VER_ID = a2.VER_ID and a1.PROJECT_ID = #{projectId}
+                                    group by a2.APP_CODE
+                                )
+                            ) t3
+           on t1.PROJECT_ID = t3.PROJECT_ID and t1.APP_CODE = t3.APP_CODE
+        where t1.PROJECT_ID = #{projectId}
+    </select>
+
+</mapper>
