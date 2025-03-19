@@ -1,13 +1,11 @@
 package com.aeye.modules.ht.controller;
 
 import com.aeye.common.utils.AeyeAbstractController;
-import com.aeye.common.utils.AeyePageInfo;
 import com.aeye.common.utils.Query;
 import com.aeye.common.utils.WrapperResponse;
-import com.aeye.modules.ht.dto.HtMatterDTO;
-import com.aeye.modules.ht.entity.HtMatterDO;
-import com.aeye.modules.ht.service.IHtMatterService;
-import com.alibaba.fastjson.JSON;
+import com.aeye.modules.ht.dto.HtCategoryDTO;
+import com.aeye.modules.ht.entity.HtCategoryDO;
+import com.aeye.modules.ht.service.HtCategoryService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
@@ -21,13 +19,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Arrays;
 import java.util.List;
 
-@Api(tags = "物料分类管理")
 @RestController
-@RequestMapping("/ht/matterCategory")
-public class HtMatterController extends AeyeAbstractController {
+@RequestMapping("/ht/category")
+@Api(tags = "分类管理")
+public class HtCategoryController extends AeyeAbstractController {
     
     @Autowired
-    private IHtMatterService htMatterService;
+    private HtCategoryService htCategoryService;
 
     @ApiImplicitParams({
             @ApiImplicitParam(name="pageNum", value = "当前页码", dataType="int", paramType = "header"),
@@ -37,17 +35,17 @@ public class HtMatterController extends AeyeAbstractController {
     })
     @RequestMapping(value = "/list",method = {RequestMethod.POST,RequestMethod.GET})
     @ApiOperation(value = "查询列表")
-    public WrapperResponse<List<HtMatterDTO>> list(HtMatterDTO params) throws Exception{
+    public WrapperResponse<List<HtCategoryDTO>> list(HtCategoryDTO params) throws Exception{
 
-        IPage<HtMatterDO> page = htMatterService.page(
-                new Query<HtMatterDO>().getPage(buildPageInfo()),
-                new LambdaQueryWrapper<HtMatterDO>()
-                        .eq(StringUtils.isNotBlank(params.getParentCode()), HtMatterDO::getParentCode, params.getParentCode())
+        IPage<HtCategoryDO> page = htCategoryService.page(
+                new Query<HtCategoryDO>().getPage(buildPageInfo()),
+                new LambdaQueryWrapper<HtCategoryDO>()
+                        .eq(StringUtils.isNotBlank(params.getParentCode()), HtCategoryDO::getParentCode, params.getParentCode())
                         .and(StringUtils.isNotBlank(params.getKeyword()),
-                                wrapper -> wrapper.like(HtMatterDO::getMatterCode, params.getKeyword())
+                                wrapper -> wrapper.like(HtCategoryDO::getCategoryCode, params.getKeyword())
                                         .or()
-                                        .like(HtMatterDO::getMatterName, params.getKeyword()))
-                        .orderByAsc(HtMatterDO::getOrderNum)
+                                        .like(HtCategoryDO::getCategoryName, params.getKeyword()))
+                        .orderByAsc(HtCategoryDO::getOrderNum)
         );
         return (WrapperResponse)WrapperResponse.success(page);
     }
@@ -58,8 +56,8 @@ public class HtMatterController extends AeyeAbstractController {
      */
     @RequestMapping(value = "/info/{appCode}", method = {RequestMethod.GET})
     @ApiOperation(value = "查询")
-    public WrapperResponse<HtMatterDTO> info(@PathVariable("appCode") String appCode) throws Exception{
-        HtMatterDO htMatterStoin = htMatterService.getById(appCode);
+    public WrapperResponse<HtCategoryDTO> info(@PathVariable("appCode") String appCode) throws Exception{
+        HtCategoryDO htMatterStoin = htCategoryService.getById(appCode);
 
         return (WrapperResponse)WrapperResponse.success(htMatterStoin);
     }
@@ -69,8 +67,8 @@ public class HtMatterController extends AeyeAbstractController {
      */
     @RequestMapping(value = "/save",method = {RequestMethod.POST})
     @ApiOperation(value = "保存")
-    public WrapperResponse<HtMatterDTO> save(HtMatterDTO htMatterStoin) throws Exception{
-        htMatterService.save(HtMatterDO.copyBean(htMatterStoin));
+    public WrapperResponse<HtCategoryDTO> save(HtCategoryDTO htMatterStoin) throws Exception{
+        htCategoryService.save(HtCategoryDO.copyBean(htMatterStoin));
         return (WrapperResponse)WrapperResponse.success(null);
     }
 
@@ -79,8 +77,8 @@ public class HtMatterController extends AeyeAbstractController {
      */
     @RequestMapping(value = "/update",method = {RequestMethod.POST})
     @ApiOperation(value = "修改")
-    public WrapperResponse<HtMatterDTO> update(HtMatterDTO htMatterStoin) throws Exception{
-        htMatterService.updateById(HtMatterDO.copyBean(htMatterStoin));
+    public WrapperResponse<HtCategoryDTO> update(HtCategoryDTO htMatterStoin) throws Exception{
+        htCategoryService.updateById(HtCategoryDO.copyBean(htMatterStoin));
 
         return (WrapperResponse)WrapperResponse.success(null);
     }
@@ -91,7 +89,7 @@ public class HtMatterController extends AeyeAbstractController {
     @RequestMapping(value = "/deleteBatch",method = {RequestMethod.POST})
     @ApiOperation(value = "批量删除")
     public WrapperResponse deleteBatch(@RequestBody String[] appCodes) throws Exception{
-        htMatterService.removeByIds(Arrays.asList(appCodes));
+        htCategoryService.removeByIds(Arrays.asList(appCodes));
 
         return WrapperResponse.success(null);
     }
@@ -102,9 +100,9 @@ public class HtMatterController extends AeyeAbstractController {
     @RequestMapping(value = "/delete/{appCode}",method = {RequestMethod.GET})
     @ApiOperation(value = "删除")
     public WrapperResponse delete(@PathVariable("appCode") String appCode) throws Exception{
-        htMatterService.removeById(appCode);
+        htCategoryService.removeById(appCode);
 
         return WrapperResponse.success(null);
     }
-
+    
 }
