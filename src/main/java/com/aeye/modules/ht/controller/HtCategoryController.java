@@ -1,6 +1,7 @@
 package com.aeye.modules.ht.controller;
 
 import com.aeye.common.utils.AeyeAbstractController;
+import com.aeye.common.utils.AeyeBeanUtils;
 import com.aeye.common.utils.Query;
 import com.aeye.common.utils.WrapperResponse;
 import com.aeye.modules.ht.dto.HtCategoryDTO;
@@ -16,6 +17,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -47,6 +49,10 @@ public class HtCategoryController extends AeyeAbstractController {
                                         .like(HtCategoryDO::getCategoryName, params.getKeyword()))
                         .orderByAsc(HtCategoryDO::getOrderNum)
         );
+        for(HtCategoryDO bean : page.getRecords()){
+            int childNum = htCategoryService.count(new LambdaQueryWrapper<HtCategoryDO>().eq(HtCategoryDO::getParentCode,bean.getCategoryCode()));
+            bean.setChildNum(childNum);
+        }
         return (WrapperResponse)WrapperResponse.success(page);
     }
 

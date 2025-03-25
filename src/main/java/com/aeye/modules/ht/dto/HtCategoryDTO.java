@@ -32,4 +32,7 @@ public class HtCategoryDTO implements Serializable {
 
     @ApiModelProperty(value = "排序")
     private Integer orderNum;
+
+    private Integer childNum;
+
 }

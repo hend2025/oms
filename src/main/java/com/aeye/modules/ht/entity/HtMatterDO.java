@@ -2,53 +2,53 @@ package com.aeye.modules.ht.entity;
 
 import com.aeye.common.utils.AeyeBeanUtils;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 分类
+ * 物料
  * @author 沈兴平
  * @date 2024/09/27
  */
 @Data
-@TableName("ht_category")
-public class HtCategoryDO implements Serializable {
+@TableName("ht_matter")
+public class HtMatterDO implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    /**
+     * 物料ID
+     */
+    @TableId(type = IdType.INPUT)
+    private Integer matterId;
+
+    /**
+     * 物料编码
+     */
+    private String matterCode;
+
+    /**
+     * 物料名称
+     */
+    private String matterName;
 
     /**
      * 分类编码
      */
-    @TableId(type = IdType.INPUT)
     private String categoryCode;
 
     /**
-     * 分类名称
+     * 物料参数
      */
-    private String categoryName;
-
-    /**
-     * 上级分类编码
-     */
-    private String parentCode;
-
-    /**
-     * 所属类别
-     */
-    private String blngType;
+    private String matterParam;
 
     /**
      * 排序
      */
     private Integer orderNum;
 
-    @TableField(exist = false)
-    private Integer childNum;
-
-    public static HtCategoryDO copyBean(Object source) throws Exception {
-        return AeyeBeanUtils.copyBean(source, HtCategoryDO.class);
+    public static HtMatterDO copyBean(Object source) throws Exception {
+        return AeyeBeanUtils.copyBean(source, HtMatterDO.class);
     }
-
 }
