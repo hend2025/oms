@@ -6,42 +6,31 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+
 import java.io.Serializable;
 
-/**
- * 分类
- * @author 沈兴平
- * @date 2024/09/27
- */
 @Data
 @TableName("ht_category")
 public class HtCategoryDO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 分类编码
-     */
     @TableId(type = IdType.INPUT)
-    private String categoryCode;
+    private Long categoryId;
 
-    /**
-     * 分类名称
-     */
     private String categoryName;
 
-    /**
-     * 上级分类编码
-     */
-    private String parentCode;
+    private String categoryCode;
 
-    /**
-     * 所属类别
-     */
+    private Long parentId;
+
     private String blngType;
 
-    /**
-     * 排序
-     */
+    private String aliasName;
+
+    private String pinyin;
+
+    private String param;
+
     private Integer orderNum;
 
     @TableField(exist = false)

@@ -4,7 +4,9 @@ import com.aeye.common.utils.AeyeAbstractController;
 import com.aeye.common.utils.Query;
 import com.aeye.common.utils.WrapperResponse;
 import com.aeye.modules.ht.dto.HtMatterDTO;
+import com.aeye.modules.ht.entity.HtCategoryDO;
 import com.aeye.modules.ht.entity.HtMatterDO;
+import com.aeye.modules.ht.service.HtCategoryService;
 import com.aeye.modules.ht.service.HtMatterService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -21,11 +23,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/ht/matter")
-@Api(tags = "物料管理")
 public class HtMatterController extends AeyeAbstractController {
     
     @Autowired
     private HtMatterService htMatterService;
+    @Autowired
+    private HtCategoryService htCategoryService;
 
     @ApiImplicitParams({
             @ApiImplicitParam(name="pageNum", value = "当前页码", dataType="int", paramType = "header"),
@@ -39,12 +42,13 @@ public class HtMatterController extends AeyeAbstractController {
         IPage<HtMatterDO> page = htMatterService.page(
                 new Query<HtMatterDO>().getPage(buildPageInfo()),
                 new LambdaQueryWrapper<HtMatterDO>()
-                        .eq(StringUtils.isNotBlank(params.getCategoryCode()), HtMatterDO::getCategoryCode, params.getCategoryCode())
+                        .eq(params.getCategoryId()!=null,HtMatterDO::getCategoryId, params.getCategoryId())
                         .and(StringUtils.isNotBlank(params.getKeyword()),
                                 wrapper -> wrapper.like(HtMatterDO::getMatterCode, params.getKeyword())
-                                        .or()
-                                        .like(HtMatterDO::getMatterName, params.getKeyword()))
-                        .orderByAsc(HtMatterDO::getOrderNum)
+                                        .or().like(HtMatterDO::getMatterName, params.getKeyword())
+                                        .or().like(HtMatterDO::getAliasName, params.getKeyword())
+                                        .or().like(HtMatterDO::getPinyin, params.getKeyword())
+                        )
         );
         return (WrapperResponse)WrapperResponse.success(page);
     }
@@ -53,6 +57,7 @@ public class HtMatterController extends AeyeAbstractController {
     @ApiOperation(value = "查询")
     public WrapperResponse<HtMatterDTO> info(@PathVariable("matterId") Integer matterId) throws Exception {
         HtMatterDO matter = htMatterService.getById(matterId);
+        matter.setCategoryName(htCategoryService.getById(matter.getCategoryId()).getCategoryName());
         return (WrapperResponse)WrapperResponse.success(matter);
     }
 

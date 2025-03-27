@@ -38,11 +38,10 @@ public class HtCategoryController extends AeyeAbstractController {
     @RequestMapping(value = "/list",method = {RequestMethod.POST,RequestMethod.GET})
     @ApiOperation(value = "查询列表")
     public WrapperResponse<List<HtCategoryDTO>> list(HtCategoryDTO params) throws Exception{
-
         IPage<HtCategoryDO> page = htCategoryService.page(
                 new Query<HtCategoryDO>().getPage(buildPageInfo()),
                 new LambdaQueryWrapper<HtCategoryDO>()
-                        .eq(StringUtils.isNotBlank(params.getParentCode()), HtCategoryDO::getParentCode, params.getParentCode())
+                        .eq(params.getParentId()!=null, HtCategoryDO::getParentId, params.getParentId())
                         .and(StringUtils.isNotBlank(params.getKeyword()),
                                 wrapper -> wrapper.like(HtCategoryDO::getCategoryCode, params.getKeyword())
                                         .or()
@@ -50,7 +49,7 @@ public class HtCategoryController extends AeyeAbstractController {
                         .orderByAsc(HtCategoryDO::getOrderNum)
         );
         for(HtCategoryDO bean : page.getRecords()){
-            int childNum = htCategoryService.count(new LambdaQueryWrapper<HtCategoryDO>().eq(HtCategoryDO::getParentCode,bean.getCategoryCode()));
+            int childNum = htCategoryService.count(new LambdaQueryWrapper<HtCategoryDO>().eq(HtCategoryDO::getParentId,bean.getCategoryCode()));
             bean.setChildNum(childNum);
         }
         return (WrapperResponse)WrapperResponse.success(page);
