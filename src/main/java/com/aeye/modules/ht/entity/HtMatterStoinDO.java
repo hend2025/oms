@@ -26,6 +26,9 @@ public class HtMatterStoinDO implements Serializable {
 
     private Long categoryId;
 
+    @TableField(exist = false)
+    private String categoryName;
+
     private String matterPara;
 
     private Date stoinDate;

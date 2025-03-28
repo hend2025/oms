@@ -6,6 +6,7 @@ import com.aeye.common.utils.Query;
 import com.aeye.common.utils.WrapperResponse;
 import com.aeye.modules.ht.dto.HtMatterStoinDTO;
 import com.aeye.modules.ht.entity.HtMatterStoinDO;
+import com.aeye.modules.ht.service.HtCategoryService;
 import com.aeye.modules.ht.service.HtMatterStoinService;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -28,7 +29,10 @@ public class HtMatterStoinController extends AeyeAbstractController {
     
     @Autowired
     private HtMatterStoinService htMatterStoinService;
+    @Autowired
+    private HtCategoryService htCategoryService;
 
+    
     @ApiImplicitParams({
             @ApiImplicitParam(name="pageNum", value = "当前页码", dataType="int", paramType = "header"),
             @ApiImplicitParam(name="pageSize",value="每页条目",dataType="int", paramType = "header"),
@@ -57,7 +61,7 @@ public class HtMatterStoinController extends AeyeAbstractController {
     @ApiOperation(value = "查询")
     public WrapperResponse<HtMatterStoinDTO> info(@PathVariable("appCode") String appCode) throws Exception{
         HtMatterStoinDO htMatterStoin = htMatterStoinService.getById(appCode);
-
+        htMatterStoin.setCategoryName(htCategoryService.getById(htMatterStoin.getCategoryId()).getCategoryName());
         return (WrapperResponse)WrapperResponse.success(htMatterStoin);
     }
 

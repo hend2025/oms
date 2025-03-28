@@ -10,6 +10,9 @@ import java.io.Serializable;
 public class HtOrgDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty(value = "关键字")
+    private String keyword;
+
     @ApiModelProperty(value = "机构ID")
     private Long orgId;
 
@@ -18,6 +21,9 @@ public class HtOrgDTO implements Serializable {
 
     @ApiModelProperty(value = "机构名称")
     private String orgName;
+
+    @ApiModelProperty(value = "机构类型")
+    private String orgType;
 
     @ApiModelProperty(value = "联系人")
     private String conerName;
@@ -28,6 +34,4 @@ public class HtOrgDTO implements Serializable {
     @ApiModelProperty(value = "机构地址")
     private String addr;
 
-    @ApiModelProperty(value = "关键字")
-    private String keyword;
 }

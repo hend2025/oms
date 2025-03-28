@@ -4,6 +4,7 @@ import com.aeye.common.utils.AeyeBeanUtils;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import java.io.Serializable;
 
@@ -18,6 +19,8 @@ public class HtOrgDO implements Serializable {
     private String orgCode;
 
     private String orgName;
+
+    private String orgType;
 
     private String conerName;
 
