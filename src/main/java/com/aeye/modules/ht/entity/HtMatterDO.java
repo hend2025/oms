@@ -29,7 +29,7 @@ public class HtMatterDO implements Serializable {
 
     private String pinyin;
 
-    private String param;
+    private String matterPara;
 
     public static HtMatterDO copyBean(Object source) throws Exception {
         return AeyeBeanUtils.copyBean(source, HtMatterDO.class);

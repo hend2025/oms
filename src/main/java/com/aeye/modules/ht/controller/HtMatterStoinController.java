@@ -42,7 +42,7 @@ public class HtMatterStoinController extends AeyeAbstractController {
                 new Query<HtMatterStoinDO>().getPage(buildPageInfo()),
                 new LambdaQueryWrapper<HtMatterStoinDO>()
                         .eq(StringUtils.isNotBlank(params.getMatterName()),HtMatterStoinDO::getMatterName,params.getMatterName())
-                        .eq(StringUtils.isNotBlank(params.getCompanyName()),HtMatterStoinDO::getMatterName,params.getCompanyName())
+                        .eq(StringUtils.isNotBlank(params.getOrgName()),HtMatterStoinDO::getMatterName,params.getOrgName())
                         .ge(params.getStartDate()!=null,HtMatterStoinDO::getStoinDate,params.getStartDate())
                         .le(params.getEndDate()!=null,HtMatterStoinDO::getStoinDate,params.getEndDate())
         );

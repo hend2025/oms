@@ -11,9 +11,9 @@ public class HtMatterDTO implements Serializable {
 
     private Long matterId;
 
-    private String matterName;
-
     private String matterCode;
+
+    private String matterName;
 
     private Long categoryId;
 
@@ -23,6 +23,6 @@ public class HtMatterDTO implements Serializable {
 
     private String pinyin;
 
-    private String param;
+    private String matterPara;
 
 }
