@@ -34,7 +34,9 @@ public class HtMatterStoinDTO {
     private BigDecimal price;
     
     private BigDecimal money;
-    
+
+    private Long orgId;
+
     private String orgCode;
     
     private String orgName;

@@ -36,6 +36,8 @@ public class HtMatterStoinDO implements Serializable {
 
     private BigDecimal money;
 
+    private Long orgId;
+
     private String orgCode;
 
     private String orgName;
