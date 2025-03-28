@@ -46,10 +46,10 @@ public class HtCategoryController extends AeyeAbstractController {
                                 wrapper -> wrapper.like(HtCategoryDO::getCategoryCode, params.getKeyword())
                                         .or()
                                         .like(HtCategoryDO::getCategoryName, params.getKeyword()))
-                        .orderByAsc(HtCategoryDO::getOrderNum)
+                        .orderByAsc(HtCategoryDO::getCategoryId)
         );
         for(HtCategoryDO bean : page.getRecords()){
-            int childNum = htCategoryService.count(new LambdaQueryWrapper<HtCategoryDO>().eq(HtCategoryDO::getParentId,bean.getCategoryCode()));
+            int childNum = htCategoryService.count(new LambdaQueryWrapper<HtCategoryDO>().eq(HtCategoryDO::getParentId,bean.getCategoryId()));
             bean.setChildNum(childNum);
         }
         return (WrapperResponse)WrapperResponse.success(page);

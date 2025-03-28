@@ -17,17 +17,15 @@ public class HtCategoryDTO implements Serializable {
 
     private String categoryCode;
 
-    private Long parentId;
+    private String categoryType;
 
-    private String blngType;
+    private Long parentId;
 
     private String aliasName;
 
     private String pinyin;
 
     private String param;
-
-    private Integer orderNum;
 
     private Integer childNum;
 

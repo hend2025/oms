@@ -1,8 +1,5 @@
 package com.aeye.modules.ht.dto;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import java.io.Serializable;
 
@@ -14,9 +11,9 @@ public class HtMatterDTO implements Serializable {
 
     private Long matterId;
 
-    private String matterCode;
-
     private String matterName;
+
+    private String matterCode;
 
     private Long categoryId;
 
@@ -27,7 +24,5 @@ public class HtMatterDTO implements Serializable {
     private String pinyin;
 
     private String param;
-
-    private Integer orderNum;
 
 }

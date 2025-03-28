@@ -13,12 +13,12 @@ import java.io.Serializable;
 public class HtMatterDO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @TableId(type = IdType.ASSIGN_ID)
+    @TableId(type = IdType.AUTO)
     private Long matterId;
 
-    private String matterCode;
-
     private String matterName;
+
+    private String matterCode;
 
     private Long categoryId;
 
@@ -30,8 +30,6 @@ public class HtMatterDO implements Serializable {
     private String pinyin;
 
     private String param;
-
-    private Integer orderNum;
 
     public static HtMatterDO copyBean(Object source) throws Exception {
         return AeyeBeanUtils.copyBean(source, HtMatterDO.class);

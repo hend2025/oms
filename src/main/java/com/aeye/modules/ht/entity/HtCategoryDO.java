@@ -14,24 +14,22 @@ import java.io.Serializable;
 public class HtCategoryDO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @TableId(type = IdType.INPUT)
+    @TableId(type = IdType.AUTO)
     private Long categoryId;
 
     private String categoryName;
 
     private String categoryCode;
 
-    private Long parentId;
+    private String categoryType;
 
-    private String blngType;
+    private Long parentId;
 
     private String aliasName;
 
     private String pinyin;
 
     private String param;
-
-    private Integer orderNum;
 
     @TableField(exist = false)
     private Integer childNum;
