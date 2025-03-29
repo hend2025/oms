@@ -27,7 +27,7 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://8.134.86.171:3306/medicare_version?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+      url: jdbc:mysql://8.134.86.171:3306/hend_oms?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
       username: root
       password: He@1234.
 

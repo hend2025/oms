@@ -1,7 +1,6 @@
 package com.aeye.modules.ht.controller;
 
 import com.aeye.common.utils.AeyeAbstractController;
-import com.aeye.common.utils.AeyeBeanUtils;
 import com.aeye.common.utils.Query;
 import com.aeye.common.utils.WrapperResponse;
 import com.aeye.modules.ht.dto.HtCategoryDTO;
@@ -17,7 +16,6 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -42,6 +40,7 @@ public class HtCategoryController extends AeyeAbstractController {
                 new Query<HtCategoryDO>().getPage(buildPageInfo()),
                 new LambdaQueryWrapper<HtCategoryDO>()
                         .eq(params.getParentId()!=null, HtCategoryDO::getParentId, params.getParentId())
+                        .eq(StringUtils.isNotBlank(params.getBusiType()), HtCategoryDO::getBusiType, params.getBusiType())
                         .and(StringUtils.isNotBlank(params.getKeyword()),
                                 wrapper -> wrapper.like(HtCategoryDO::getCategoryCode, params.getKeyword())
                                         .or()
@@ -62,9 +61,13 @@ public class HtCategoryController extends AeyeAbstractController {
     @RequestMapping(value = "/info/{appCode}", method = {RequestMethod.GET})
     @ApiOperation(value = "查询")
     public WrapperResponse<HtCategoryDTO> info(@PathVariable("appCode") String appCode) throws Exception{
-        HtCategoryDO htMatterStoin = htCategoryService.getById(appCode);
-
-        return (WrapperResponse)WrapperResponse.success(htMatterStoin);
+        HtCategoryDO htCategoryDO = htCategoryService.getById(appCode);
+        if(htCategoryDO.getParentId()==null || htCategoryDO.getParentId()==0){
+            htCategoryDO.setParentName("顶级分类");
+        }else{
+            htCategoryDO.setParentName(htCategoryService.getById(htCategoryDO.getParentId()).getCategoryName());
+        }
+        return (WrapperResponse)WrapperResponse.success(htCategoryDO);
     }
 
     /**

@@ -21,9 +21,14 @@ public class HtCategoryDO implements Serializable {
 
     private String categoryCode;
 
-    private String categoryType;
-
     private Long parentId;
+
+    @TableField(exist = false)
+    private String parentName;
+
+    private String nodeType;
+
+    private String busiType;
 
     private String aliasName;
 

@@ -14,18 +14,10 @@ public class HtMatterStoinDTO {
 
     private Long stoinId;
     
-    private String matterId;
-
-    private String matterCode;
-
-    private String matterName;
-
     private Long categoryId;
 
     private String categoryName;
     
-    private String matterPara;
-
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date stoinDate;
@@ -43,6 +35,8 @@ public class HtMatterStoinDTO {
     private BigDecimal price;
     
     private BigDecimal money;
+
+    private BigDecimal payMoney;
 
     private Long orgId;
 

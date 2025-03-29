@@ -2,7 +2,6 @@ package com.aeye.modules.ht.entity;
 
 import com.aeye.common.utils.AeyeBeanUtils;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -18,18 +17,9 @@ public class HtMatterStoinDO implements Serializable {
     @TableId(type = IdType.AUTO)
     private Long stoinId;
 
-    private String matterId;
-
-    private String matterName;
-
-    private String matterCode;
-
     private Long categoryId;
 
-    @TableField(exist = false)
     private String categoryName;
-
-    private String matterPara;
 
     private Date stoinDate;
 
@@ -38,6 +28,8 @@ public class HtMatterStoinDO implements Serializable {
     private BigDecimal price;
 
     private BigDecimal money;
+
+    private BigDecimal payMoney;
 
     private Long orgId;
 

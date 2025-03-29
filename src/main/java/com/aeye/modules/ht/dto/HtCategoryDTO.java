@@ -1,5 +1,8 @@
 package com.aeye.modules.ht.dto;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import java.io.Serializable;
@@ -17,9 +20,13 @@ public class HtCategoryDTO implements Serializable {
 
     private String categoryCode;
 
-    private String categoryType;
-
     private Long parentId;
+
+    private String parentName;
+
+    private String nodeType;
+
+    private String busiType;
 
     private String aliasName;
 

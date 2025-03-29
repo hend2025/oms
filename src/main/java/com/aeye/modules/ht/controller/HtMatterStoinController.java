@@ -32,7 +32,6 @@ public class HtMatterStoinController extends AeyeAbstractController {
     @Autowired
     private HtCategoryService htCategoryService;
 
-
     @ApiImplicitParams({
             @ApiImplicitParam(name="pageNum", value = "当前页码", dataType="int", paramType = "header"),
             @ApiImplicitParam(name="pageSize",value="每页条目",dataType="int", paramType = "header"),
@@ -45,18 +44,14 @@ public class HtMatterStoinController extends AeyeAbstractController {
         IPage<HtMatterStoinDO> page = htMatterStoinService.page(
                 new Query<HtMatterStoinDO>().getPage(buildPageInfo()),
                 new LambdaQueryWrapper<HtMatterStoinDO>()
-                        .eq(StringUtils.isNotBlank(params.getMatterName()),HtMatterStoinDO::getMatterName,params.getMatterName())
-                        .eq(StringUtils.isNotBlank(params.getOrgName()),HtMatterStoinDO::getMatterName,params.getOrgName())
+                        .eq(StringUtils.isNotBlank(params.getCategoryName()),HtMatterStoinDO::getCategoryName,params.getCategoryName())
+                        .eq(StringUtils.isNotBlank(params.getOrgName()),HtMatterStoinDO::getOrgName,params.getOrgName())
                         .ge(params.getStartDate()!=null,HtMatterStoinDO::getStoinDate,params.getStartDate())
                         .le(params.getEndDate()!=null,HtMatterStoinDO::getStoinDate,params.getEndDate())
         );
         return (WrapperResponse)WrapperResponse.success(page);
     }
 
-
-    /**
-     * 信息
-     */
     @RequestMapping(value = "/info/{appCode}", method = {RequestMethod.GET})
     @ApiOperation(value = "查询")
     public WrapperResponse<HtMatterStoinDTO> info(@PathVariable("appCode") String appCode) throws Exception{
@@ -65,9 +60,6 @@ public class HtMatterStoinController extends AeyeAbstractController {
         return (WrapperResponse)WrapperResponse.success(htMatterStoin);
     }
 
-    /**
-     * 保存
-     */
     @RequestMapping(value = "/save",method = {RequestMethod.POST})
     @ApiOperation(value = "保存")
     public WrapperResponse<HtMatterStoinDTO> save(HtMatterStoinDTO htMatterStoin) throws Exception{
@@ -75,9 +67,6 @@ public class HtMatterStoinController extends AeyeAbstractController {
         return (WrapperResponse)WrapperResponse.success(null);
     }
 
-    /**
-     * 修改
-     */
     @RequestMapping(value = "/update",method = {RequestMethod.POST})
     @ApiOperation(value = "修改")
     public WrapperResponse<HtMatterStoinDTO> update(HtMatterStoinDTO htMatterStoin) throws Exception{
@@ -86,9 +75,6 @@ public class HtMatterStoinController extends AeyeAbstractController {
         return (WrapperResponse)WrapperResponse.success(null);
     }
 
-    /**
-     * 批量删除
-     */
     @RequestMapping(value = "/deleteBatch",method = {RequestMethod.POST})
     @ApiOperation(value = "批量删除")
     public WrapperResponse deleteBatch(@RequestBody String[] appCodes) throws Exception{
@@ -97,9 +83,6 @@ public class HtMatterStoinController extends AeyeAbstractController {
         return WrapperResponse.success(null);
     }
 
-    /**
-     * 删除
-     */
     @RequestMapping(value = "/delete/{appCode}",method = {RequestMethod.GET})
     @ApiOperation(value = "删除")
     public WrapperResponse delete(@PathVariable("appCode") String appCode) throws Exception{
