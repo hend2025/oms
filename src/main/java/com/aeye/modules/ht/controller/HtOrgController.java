@@ -16,6 +16,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,6 +40,7 @@ public class HtOrgController extends AeyeAbstractController {
         IPage<HtOrgDO> page = htOrgService.page(
                 new Query<HtOrgDO>().getPage(buildPageInfo()),
                 new LambdaQueryWrapper<HtOrgDO>()
+                        .in(StringUtils.isNotBlank(params.getOrgType()),HtOrgDO::getOrgType,params.getOrgType().split(","))
                         .and(StringUtils.isNotBlank(params.getSearchKey()),
                                 wrapper -> wrapper.like(HtOrgDO::getOrgCode, params.getSearchKey())
                                         .or().like(HtOrgDO::getOrgName, params.getSearchKey())
