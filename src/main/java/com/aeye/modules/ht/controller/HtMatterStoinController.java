@@ -5,6 +5,7 @@ import com.aeye.common.utils.AeyePageInfo;
 import com.aeye.common.utils.Query;
 import com.aeye.common.utils.WrapperResponse;
 import com.aeye.modules.ht.dto.HtMatterStoinDTO;
+import com.aeye.modules.ht.entity.HtMatterDO;
 import com.aeye.modules.ht.entity.HtMatterStoinDO;
 import com.aeye.modules.ht.service.HtCategoryService;
 import com.aeye.modules.ht.service.HtMatterStoinService;
@@ -46,8 +47,15 @@ public class HtMatterStoinController extends AeyeAbstractController {
                 new LambdaQueryWrapper<HtMatterStoinDO>()
                         .eq(StringUtils.isNotBlank(params.getCategoryName()),HtMatterStoinDO::getCategoryName,params.getCategoryName())
                         .eq(StringUtils.isNotBlank(params.getOrgName()),HtMatterStoinDO::getOrgName,params.getOrgName())
+                        .eq(params.getCategoryId()!=null,HtMatterStoinDO::getCategoryId,params.getCategoryId())
+                        .eq(params.getOrgId()!=null,HtMatterStoinDO::getOrgId,params.getOrgId())
                         .ge(params.getStartDate()!=null,HtMatterStoinDO::getStoinDate,params.getStartDate())
                         .le(params.getEndDate()!=null,HtMatterStoinDO::getStoinDate,params.getEndDate())
+                        .and(StringUtils.isNotBlank(params.getSearchKey()),
+                                wrapper -> wrapper.like(HtMatterStoinDO::getCategoryName, params.getSearchKey())
+                                        .or().like(HtMatterStoinDO::getOrgName, params.getSearchKey())
+                                        .or().like(HtMatterStoinDO::getOrgCode, params.getSearchKey())
+                        )
         );
         return (WrapperResponse)WrapperResponse.success(page);
     }

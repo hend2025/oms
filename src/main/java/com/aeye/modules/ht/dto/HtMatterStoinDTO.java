@@ -10,7 +10,7 @@ import java.util.Date;
 @Data
 public class HtMatterStoinDTO {
 
-    private String keyword;
+    private String searchKey;
 
     private Long stoinId;
     

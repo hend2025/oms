@@ -39,10 +39,10 @@ public class HtOrgController extends AeyeAbstractController {
         IPage<HtOrgDO> page = htOrgService.page(
                 new Query<HtOrgDO>().getPage(buildPageInfo()),
                 new LambdaQueryWrapper<HtOrgDO>()
-                        .and(StringUtils.isNotBlank(params.getKeyword()),
-                                wrapper -> wrapper.like(HtOrgDO::getOrgCode, params.getKeyword())
+                        .and(StringUtils.isNotBlank(params.getSearchKey()),
+                                wrapper -> wrapper.like(HtOrgDO::getOrgCode, params.getSearchKey())
                                         .or()
-                                        .like(HtOrgDO::getOrgName, params.getKeyword()))
+                                        .like(HtOrgDO::getOrgName, params.getSearchKey()))
         );
         return (WrapperResponse)WrapperResponse.success(page);
     }

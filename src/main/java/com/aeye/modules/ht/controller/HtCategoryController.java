@@ -41,10 +41,10 @@ public class HtCategoryController extends AeyeAbstractController {
                 new LambdaQueryWrapper<HtCategoryDO>()
                         .eq(params.getParentId()!=null, HtCategoryDO::getParentId, params.getParentId())
                         .eq(StringUtils.isNotBlank(params.getBusiType()), HtCategoryDO::getBusiType, params.getBusiType())
-                        .and(StringUtils.isNotBlank(params.getKeyword()),
-                                wrapper -> wrapper.like(HtCategoryDO::getCategoryCode, params.getKeyword())
+                        .and(StringUtils.isNotBlank(params.getSearchKey()),
+                                wrapper -> wrapper.like(HtCategoryDO::getCategoryCode, params.getSearchKey())
                                         .or()
-                                        .like(HtCategoryDO::getCategoryName, params.getKeyword()))
+                                        .like(HtCategoryDO::getCategoryName, params.getSearchKey()))
                         .orderByAsc(HtCategoryDO::getCategoryId)
         );
         for(HtCategoryDO bean : page.getRecords()){

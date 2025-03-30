@@ -11,7 +11,7 @@ public class HtOrgDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "关键字")
-    private String keyword;
+    private String searchKey;
 
     @ApiModelProperty(value = "机构ID")
     private Long orgId;
