@@ -41,8 +41,9 @@ public class HtOrgController extends AeyeAbstractController {
                 new LambdaQueryWrapper<HtOrgDO>()
                         .and(StringUtils.isNotBlank(params.getSearchKey()),
                                 wrapper -> wrapper.like(HtOrgDO::getOrgCode, params.getSearchKey())
-                                        .or()
-                                        .like(HtOrgDO::getOrgName, params.getSearchKey()))
+                                        .or().like(HtOrgDO::getOrgName, params.getSearchKey())
+                                        .or().like(HtOrgDO::getConerName, params.getSearchKey())
+                        )
         );
         return (WrapperResponse)WrapperResponse.success(page);
     }
