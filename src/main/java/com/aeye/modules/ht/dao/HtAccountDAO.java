@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface HtAccountDAO extends BaseMapper<HtAccountDO> {
@@ -15,5 +16,8 @@ public interface HtAccountDAO extends BaseMapper<HtAccountDO> {
     List<HtAccountSumDTO> accountSum(@Param("beginDate") Date beginDate,
                                      @Param("endDate")   Date endDate,
                                      @Param("searchKey") String searchKey);
+
+
+    List<Map>  accountTotal();
 
 }

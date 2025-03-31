@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class HtAccountServiceImpl extends ServiceImpl<HtAccountDAO, HtAccountDO> implements HtAccountService {
@@ -16,6 +17,11 @@ public class HtAccountServiceImpl extends ServiceImpl<HtAccountDAO, HtAccountDO>
     @Override
     public List<HtAccountSumDTO> accountSum(Date beginDate, Date endDate, String searchKey) {
         return baseMapper.accountSum(beginDate,endDate,searchKey);
+    }
+
+    @Override
+    public List<Map> accountTotal() {
+        return baseMapper.accountTotal();
     }
 
 }

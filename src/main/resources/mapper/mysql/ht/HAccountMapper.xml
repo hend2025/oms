@@ -23,4 +23,16 @@
         ) t WHERE t.RECEIVABLE - t.RECEIVED - t.PAYABLE + t.PAID != 0
     </select>
 
+
+    <select id="accountTotal" resultType="Map">
+        select DATE_FORMAT(ACCOUNT_DATE, '%Y-%m') month,
+               sum(if(pay_type = '1',MONEY,0)) as pay,
+               sum(if(pay_type = '2',MONEY,0)) as inCome
+        from ht_account
+        group by DATE_FORMAT(ACCOUNT_DATE, '%Y-%m') desc
+    </select>
+
+
+
+
 </mapper>

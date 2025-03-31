@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/ht/account")
@@ -37,6 +38,12 @@ public class HtAccountController extends AeyeAbstractController {
             params.setEndDate(new Date());
         }
         List<HtAccountSumDTO> list = htAccountService.accountSum(params.getStartDate(),params.getEndDate(),params.getSearchKey());
+        return WrapperResponse.success(list);
+    }
+
+    @RequestMapping(value = "/accountTotal",method = {RequestMethod.POST,RequestMethod.GET})
+    public WrapperResponse<List<Map>> accountTotal(HtAccountDTO params) throws Exception {
+        List<Map> list = htAccountService.accountTotal();
         return WrapperResponse.success(list);
     }
 
