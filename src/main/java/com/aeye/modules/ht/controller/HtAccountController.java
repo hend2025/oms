@@ -1,9 +1,11 @@
 package com.aeye.modules.ht.controller;
 
 import com.aeye.common.utils.AeyeAbstractController;
+import com.aeye.common.utils.DateUtils;
 import com.aeye.common.utils.Query;
 import com.aeye.common.utils.WrapperResponse;
 import com.aeye.modules.ht.dto.HtAccountDTO;
+import com.aeye.modules.ht.dto.HtAccountSumDTO;
 import com.aeye.modules.ht.entity.HtAccountDO;
 import com.aeye.modules.ht.service.HtAccountService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -17,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -26,6 +29,16 @@ public class HtAccountController extends AeyeAbstractController {
     
     @Autowired
     private HtAccountService htAccountService;
+
+    @RequestMapping(value = "/accountSum",method = {RequestMethod.POST,RequestMethod.GET})
+    public WrapperResponse<List<HtAccountSumDTO>> accountSum(HtAccountDTO params) throws Exception {
+        if (params.getStartDate()==null){
+            params.setStartDate(DateUtils.addDateMonths(new Date(),-3));
+            params.setEndDate(new Date());
+        }
+        List<HtAccountSumDTO> list = htAccountService.accountSum(params.getStartDate(),params.getEndDate(),params.getSearchKey());
+        return WrapperResponse.success(list);
+    }
 
     @ApiImplicitParams({
             @ApiImplicitParam(name="pageNum", value = "当前页码", dataType="int", paramType = "header"),

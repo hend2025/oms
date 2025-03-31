@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aeye.modules.ht.dao.HtAccountDAO">
+
+    <select id="accountSum" resultType="com.aeye.modules.ht.dto.HtAccountSumDTO">
+        select t.*,t.RECEIVABLE - t.RECEIVED - t.PAYABLE + t.PAID as BALANCE
+        from (select a.ORG_ID, a.ORG_CODE, a.ORG_NAME,
+                    IFNULL(sum(b.MONEY), 0) PAYABLE, IFNULL(sum(c.MONEY), 0) PAID,
+                    IFNULL(sum(d.MONEY), 0) RECEIVABLE, IFNULL(sum(e.MONEY), 0) RECEIVED
+            from ht_org a
+                left join ht_matter_stoin b on a.ORG_ID = b.ORG_ID and b.STOIN_DATE between #{beginDate} and #{endDate}
+                left join ht_account      c on a.ORG_ID = c.ORG_ID and c.PAY_TYPE = 1 and c.ACCOUNT_DATE between #{beginDate} and #{endDate}
+                left join ht_order        d on a.ORG_ID = d.ORG_ID and d.ORDER_DATE between #{beginDate} and #{endDate}
+                left join ht_account      e on a.ORG_ID = e.ORG_ID and e.PAY_TYPE = 2 and e.ACCOUNT_DATE between #{beginDate} and #{endDate}
+            <if test="searchKey != null">
+                where a.ORG_ID = #{searchKey}
+                   or a.ORG_CODE like concat('%', #{searchKey}, '%')
+                   or a.ORG_NAME like concat('%', #{searchKey}, '%')
+                   or a.CONER_NAME like concat('%', #{searchKey}, '%')
+            </if>
+               group by a.ORG_ID, a.ORG_CODE,  a.ORG_NAME
+        ) t WHERE t.RECEIVABLE - t.RECEIVED - t.PAYABLE + t.PAID != 0
+    </select>
+
+</mapper>
