@@ -5,7 +5,7 @@
 
     <select id="accountSum" resultType="com.aeye.modules.ht.dto.HtAccountSumDTO">
         select t.*,t.RECEIVABLE - t.RECEIVED - t.PAYABLE + t.PAID as BALANCE
-        from (select a.ORG_ID, a.ORG_CODE, a.ORG_NAME,
+        from (select a.ORG_ID,a.ORG_CODE,a.ORG_NAME,a.CONER_NAME,a.CONER_TEL,
                     IFNULL(sum(b.MONEY), 0) PAYABLE, IFNULL(sum(c.MONEY), 0) PAID,
                     IFNULL(sum(d.MONEY), 0) RECEIVABLE, IFNULL(sum(e.MONEY), 0) RECEIVED
             from ht_org a
@@ -19,7 +19,7 @@
                    or a.ORG_NAME like concat('%', #{searchKey}, '%')
                    or a.CONER_NAME like concat('%', #{searchKey}, '%')
             </if>
-               group by a.ORG_ID, a.ORG_CODE,  a.ORG_NAME
+               group by a.ORG_ID,a.ORG_CODE,a.ORG_NAME,a.CONER_NAME,a.CONER_TEL
         ) t WHERE t.RECEIVABLE - t.RECEIVED - t.PAYABLE + t.PAID != 0
     </select>
 
@@ -29,10 +29,11 @@
                sum(if(pay_type = '1',MONEY,0)) as pay,
                sum(if(pay_type = '2',MONEY,0)) as inCome
         from ht_account
+        <if test="beginDate != null and endDate != null">
+            where ACCOUNT_DATE between #{beginDate} and #{endDate}
+        </if>
         group by DATE_FORMAT(ACCOUNT_DATE, '%Y-%m') desc
     </select>
-
-
 
 
 </mapper>

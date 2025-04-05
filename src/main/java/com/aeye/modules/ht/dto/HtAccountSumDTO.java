@@ -15,6 +15,10 @@ public class HtAccountSumDTO implements Serializable {
 
     private String orgCode;
 
+    private String conerName;
+
+    private String conerTel;
+
     private BigDecimal receivable;
 
     private BigDecimal received;

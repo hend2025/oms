@@ -18,6 +18,6 @@ public interface HtAccountDAO extends BaseMapper<HtAccountDO> {
                                      @Param("searchKey") String searchKey);
 
 
-    List<Map>  accountTotal();
+    List<Map> accountTotal(@Param("beginDate") Date beginDate, @Param("endDate") Date endDate);
 
 }

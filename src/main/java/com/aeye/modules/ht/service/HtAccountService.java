@@ -12,6 +12,6 @@ public interface HtAccountService extends IService<HtAccountDO> {
 
     List<HtAccountSumDTO> accountSum(Date beginDate, Date endDate, String searchKey);
 
-    List<Map>  accountTotal();
+    List<Map>  accountTotal(Date beginDate, Date endDate);
 
 }

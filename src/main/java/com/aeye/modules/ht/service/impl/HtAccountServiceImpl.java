@@ -20,8 +20,8 @@ public class HtAccountServiceImpl extends ServiceImpl<HtAccountDAO, HtAccountDO>
     }
 
     @Override
-    public List<Map> accountTotal() {
-        return baseMapper.accountTotal();
+    public List<Map> accountTotal(Date beginDate, Date endDate) {
+        return baseMapper.accountTotal(beginDate, endDate);
     }
 
 }

@@ -43,7 +43,8 @@ public class HtAccountController extends AeyeAbstractController {
 
     @RequestMapping(value = "/accountTotal",method = {RequestMethod.POST,RequestMethod.GET})
     public WrapperResponse<List<Map>> accountTotal(HtAccountDTO params) throws Exception {
-        List<Map> list = htAccountService.accountTotal();
+        Date endDate = DateUtils.addDateSeconds(params.getEndDate(),86399);
+        List<Map> list = htAccountService.accountTotal(params.getStartDate(),endDate);
         return WrapperResponse.success(list);
     }
 
@@ -66,7 +67,7 @@ public class HtAccountController extends AeyeAbstractController {
                         .and(StringUtils.isNotBlank(params.getSearchKey()),
                                 wrapper -> wrapper.like(HtAccountDO::getOrgName, params.getSearchKey())
                                         .or().like(HtAccountDO::getOrgCode, params.getSearchKey()))
-                        .orderByDesc(HtAccountDO::getAccountDate)
+                        .orderByDesc(HtAccountDO::getAccountDate,HtAccountDO::getAccountId)
         );
         return (WrapperResponse)WrapperResponse.success(page);
     }

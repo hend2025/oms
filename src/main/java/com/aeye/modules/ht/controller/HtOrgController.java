@@ -60,8 +60,14 @@ public class HtOrgController extends AeyeAbstractController {
     @RequestMapping(value = "/save",method = {RequestMethod.POST})
     @ApiOperation(value = "保存")
     public WrapperResponse<HtOrgDTO> save(HtOrgDTO orgDTO) throws Exception {
-        htOrgService.save(HtOrgDO.copyBean(orgDTO));
-        return (WrapperResponse)WrapperResponse.success(null);
+        try{
+//            int x = 0;
+//            System.out.println(x/x);
+            htOrgService.save(HtOrgDO.copyBean(orgDTO));
+            return (WrapperResponse)WrapperResponse.success(null);
+        }catch (Exception e){
+            return (WrapperResponse)WrapperResponse.fail(e.getMessage(),null);
+        }
     }
 
     @RequestMapping(value = "/update",method = {RequestMethod.POST})
